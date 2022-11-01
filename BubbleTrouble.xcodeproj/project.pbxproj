@@ -13,6 +13,7 @@
 		965D4E6B29113A62008C8065 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965D4E6A29113A62008C8065 /* ViewController.swift */; };
 		965D4E6D29113A63008C8065 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 965D4E6C29113A63008C8065 /* Assets.xcassets */; };
 		965D4E7029113A63008C8065 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 965D4E6E29113A63008C8065 /* Main.storyboard */; };
+		965D4E9A29113CBC008C8065 /* pop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 965D4E9929113CBC008C8065 /* pop.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		965D4E6C29113A63008C8065 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		965D4E6F29113A63008C8065 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		965D4E7129113A63008C8065 /* BubbleTrouble.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BubbleTrouble.entitlements; sourceTree = "<group>"; };
+		965D4E9929113CBC008C8065 /* pop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pop.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				965D4E6829113A62008C8065 /* GameScene.swift */,
 				965D4E6A29113A62008C8065 /* ViewController.swift */,
 				965D4E6C29113A63008C8065 /* Assets.xcassets */,
+				965D4E9929113CBC008C8065 /* pop.wav */,
 				965D4E6E29113A63008C8065 /* Main.storyboard */,
 				965D4E7129113A63008C8065 /* BubbleTrouble.entitlements */,
 			);
@@ -127,6 +130,7 @@
 			files = (
 				965D4E6529113A62008C8065 /* GameScene.sks in Resources */,
 				965D4E6D29113A63008C8065 /* Assets.xcassets in Resources */,
+				965D4E9A29113CBC008C8065 /* pop.wav in Resources */,
 				965D4E7029113A63008C8065 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
