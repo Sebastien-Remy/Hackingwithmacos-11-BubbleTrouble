@@ -12,6 +12,7 @@ class GameScene: SKScene {
     var currentBubbleTexture = 0
     var maximumNumber = 1
     var bubbles = [SKSpriteNode]()
+    var bubbleTimer: Timer?
     
      override func didMove(to view: SKView) {
          bubbleTextures.append(SKTexture(imageNamed: "bubbleBlue"))
@@ -27,9 +28,15 @@ class GameScene: SKScene {
          physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
          physicsWorld.gravity = CGVector.zero
          
-         // Create bubbles
+         // Create starting bubbles
          for _ in 1...8 {
              createBubble()
+         }
+         
+         // Add bubble every 3 seconds
+         bubbleTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true) {
+             [weak self] timer in
+             self?.createBubble()
          }
     }
     
@@ -66,6 +73,14 @@ class GameScene: SKScene {
         
         // physics
         configurePhysics(for: bubble)
+        
+        // scale
+        let scale = Double.random(in: 0...1)
+        bubble.setScale(max(0.7, scale))
+        
+        // alpha
+        bubble.alpha = 0
+        bubble.run(SKAction.fadeIn(withDuration: 0.5))
         
         // Next
         nextBubble()
