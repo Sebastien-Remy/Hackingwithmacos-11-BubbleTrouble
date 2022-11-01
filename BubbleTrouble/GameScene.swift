@@ -8,6 +8,10 @@
 import SpriteKit
 
 class GameScene: SKScene {
+    
+    let kTimerDuration: Double = 4
+    let kInitialBubblesCount = 8
+    
     var bubbleTextures = [SKTexture]()
     var currentBubbleTexture = 0
     var maximumNumber = 1
@@ -24,20 +28,27 @@ class GameScene: SKScene {
          bubbleTextures.append(SKTexture(imageNamed: "bubblePurple"))
          bubbleTextures.append(SKTexture(imageNamed: "bubbleRed"))
          
-         // pysics
+         // physics
          physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
-         physicsWorld.gravity = CGVector.zero
+         physicsWorld.gravity = CGVector(dx: 0.5, dy: 0.5)
          
-         // Create starting bubbles
-         for _ in 1...8 {
-             createBubble()
-         }
-         
-         // Add bubble every 3 seconds
-         bubbleTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true) {
-             [weak self] timer in
-             self?.createBubble()
-         }
+        startGame()
+    }
+    
+    func startGame() {
+        
+        maximumNumber = 1
+        
+        // Create starting bubbles
+        for _ in 1...kInitialBubblesCount {
+            createBubble()
+        }
+        
+        // Add bubble every 3 seconds
+        bubbleTimer = Timer.scheduledTimer(withTimeInterval: kTimerDuration, repeats: true) {
+            [weak self] timer in
+            self?.createBubble()
+        }
     }
     
     func createBubble() {
@@ -49,10 +60,10 @@ class GameScene: SKScene {
         // 3. give a z position of 1 to draw it above any background
         bubble.zPosition = 1
         
-        // 4. create a label nide with the current number
-        let label = SKLabelNode(fontNamed: "HeleveticaNue-Light")
+        // 4. create a label node with the current number
+        let label = SKLabelNode(fontNamed: "HelveticaNeue-Light")
         label.text = bubble.name
-        label.color = NSColor.white
+        label.fontColor = .white
         label.fontSize = 64
         
         // 5. make the label center it vertically and draw above the bubble
@@ -175,6 +186,28 @@ class GameScene: SKScene {
         
         if bubbles.count == 0 {
             bubbleTimer?.invalidate()
+            gameOver()
         }
+    }
+    
+    func gameOver() {
+        // Label
+        let label = SKLabelNode(fontNamed: "American Typewriter")
+        label.text = "You Win"
+        label.fontColor = NSColor.green
+        label.fontSize = 18
+        label.position = CGPoint(x: frame.midX, y: frame.midY)
+        
+        let scaleUp = SKAction.scale(by: 3, duration: 3)
+        let fadeIn = SKAction.fadeOut(withDuration: 3)
+        fadeIn.timingMode = .easeInEaseOut
+        scaleUp.timingMode = .easeInEaseOut
+        let group = SKAction.group([fadeIn, scaleUp])
+        
+        addChild(label)
+        let sequence = SKAction.sequence([group,SKAction.removeFromParent()])
+        
+        label.run(sequence, completion: startGame)
+        
     }
 }
