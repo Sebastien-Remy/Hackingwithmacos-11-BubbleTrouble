@@ -126,4 +126,55 @@ class GameScene: SKScene {
         bubble.physicsBody?.angularVelocity = Double.random(in: 0...1)
         
     }
+    
+    override func mouseDown(with event: NSEvent) {
+        // find  where we clicked in SpriketKit
+        let location = event.location(in: self)
+        
+        // filter out nodes that don't have a nae
+        let clickedNodes = nodes(at: location).filter { $0.name != nil }
+        
+        // make sure at least one clicked node remains
+        guard clickedNodes.count != 0 else { return }
+        
+        // find the lowet numbered bubble on the screen
+        let lowesBubble = bubbles.min { Int($0.name!)! < Int($1.name!)!}
+        guard let bestNumber = lowesBubble?.name else { return }
+        
+        // go throught all nodes the user clicked to see if any of them is the best number
+        for node in clickedNodes {
+            if node.name == bestNumber {
+                // correct
+                pop(node as! SKSpriteNode)
+                
+                return
+            }
+        }
+        
+        // is we still here it means bad answer
+        createBubble()
+    }
+    
+    func pop(_ node: SKSpriteNode) {
+        guard let index = bubbles.firstIndex(of: node) else { return }
+        bubbles.remove(at: index)
+        
+        node.physicsBody = nil
+        node.name = nil
+        
+        let fadeOut = SKAction.fadeOut(withDuration: 0.3)
+        let scaleUp = SKAction.scale(by: 1.5, duration: 0.3)
+        scaleUp.timingMode = .easeOut
+        let group = SKAction.group([fadeOut, scaleUp])
+        
+        let sequence = SKAction.sequence([group, SKAction.removeFromParent()])
+        
+        node.run(sequence)
+        
+        run(SKAction.playSoundFileNamed("pop.wav", waitForCompletion: false))
+        
+        if bubbles.count == 0 {
+            bubbleTimer?.invalidate()
+        }
+    }
 }
